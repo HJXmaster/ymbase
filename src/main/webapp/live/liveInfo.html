@@ -1,0 +1,48 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 比分栏 -->
+<div>
+<!-- 主场球队 -->
+      <div style="float:left;">
+        <!-- 分数,未开赛时用-表示 -->
+        <div class="score" style="float:right;">
+          <span>{{game.homeScore}}</span>
+        </div>
+        <a href="https://nba.hupu.com/teams/celtics" target="_blank">
+          <img style="float:right;position:relative;top:6px;" width="50" height="50" :src="game.homeUrl">
+          <div class="txt"><span style="float:right;">{{game.homeTeam}}</span></div>
+        </a>
+      </div>
+
+      <!-- 客场球队 -->
+      <div style="float:left;">
+        <!-- 分数,未开赛时用-表示 -->
+        <div class="score" style="float:left;">{{game.visitScore}}</div>
+        <a href="https://nba.hupu.com/teams/celtics" target="_blank">
+          <img style="float:left;position:relative;top:6px;" width="50" height="50" src="./../../assets/nba/勇士.png">
+          <div class="txt" ><span style="float:left;">{{game.visitTeam}}</span></div>
+        </a>
+      </div>
+</div>
+<div id="a1"></div>
+<script type="text/javascript" src="./../static/ckplayer/ckplayer.js" charset="utf-8"></script>
+<script type="text/javascript" src="barrage.js" charset="utf-8"></script>
+<script type="text/javascript" src="websocket.js"></script>
+<script type="text/javascript">
+	var bgPath='json';//弹幕文件（路径），请自行根据你的程序进行定义，注意文件夹的第一级目录要存在，权限要可写，不加后缀，要修改后缀请到barrage.php里修改
+	var isLive=true;//是否是直播，true=是,false=普通
+    var flashvars={
+        f:'rtmp://localhost:1935/live/123456',
+        c:0,
+        b:0,
+		loaded:'loadedHandler'
+    };
+    var params={bgcolor:'#FFF',allowFullScreen:true,allowScriptAccess:'always',wmode:'transparent'};
+    CKobject.embed('./../static/ckplayer/ckplayer.swf','a1','ckplayer_a1','600','400',false,flashvars,params);
+</script>
+</body>
+</html>
