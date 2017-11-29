@@ -8,12 +8,17 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.TreeMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.hjx.service.GameService;
 @Controller
 public class GameController {
 
+	@Autowired
+	GameService gameService;
 	Map map=new TreeMap<String, String>();
 	@RequestMapping("/getDm.do")
 	@ResponseBody
@@ -25,5 +30,12 @@ public class GameController {
 		String[] dm={"hello","I am OK","打火机"};
 		map.put("ckplayer", dm);
 		return map;
+	}
+	
+	@RequestMapping("/getGameById.do")
+	@ResponseBody
+	public Object getGameById(Integer gameId){
+		System.out.println("比赛编号："+gameId);
+		return gameService.getByGmaeId(gameId);
 	}
 }

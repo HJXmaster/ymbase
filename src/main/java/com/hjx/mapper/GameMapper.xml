@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjx.dao.GameMapper" >
+  <resultMap id="BaseResultMap" type="com.hjx.entity.Game" >
+    <id column="gameId" property="gameId" jdbcType="INTEGER" />
+    <result column="homeTeam" property="homeTeam" jdbcType="INTEGER" />
+    <result column="visitTeam" property="visitTeam" jdbcType="INTEGER" />
+    <result column="homeScore" property="homeScore" jdbcType="INTEGER" />
+    <result column="visitScore" property="visitScore" jdbcType="INTEGER" />    
+    <result column="liveAddress" property="liveAddress" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    gameId,homeTeam,visitTeam,homeScore,visitScore,liveAddress
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from game
+    where gameId = #{gameId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from game
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from game
+    where gameId = #{gameId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hjx.entity.Game" >
+    insert into game (gameId,homeTeam,visitTeam,homeScore,visitScore,liveAddress)
+    values (#{gameId,jdbcType=INTEGER}, #{homeTeam,jdbcType=INTEGER}, #{visitTeam,jdbcType=INTEGER}, 
+      #{homeScore,jdbcType=INTEGER}, #{visitScore,jdbcType=INTEGER}, 
+      #{liveAddress,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjx.entity.Game" >
+    insert into game
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        gameId,
+      </if>
+      <if test="homeTeam != null" >
+        homeTeam,
+      </if>
+      <if test="visitTeam != null" >
+        visitTeam,
+      </if>
+      <if test="homeScore != null" >
+        homeScore,
+      </if>
+      <if test="visitScore != null" >
+        visitScore,
+      </if>
+      <if test="liveAddress != null" >
+        liveAddress,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="homeTeam != null" >
+        #{homeTeam,jdbcType=INTEGER},
+      </if>
+      <if test="visitTeam != null" >
+        #{visitTeam,jdbcType=INTEGER},
+      </if>
+      <if test="homeScore != null" >
+        #{homeScore,jdbcType=INTEGER},
+      </if>
+      <if test="visitScore != null" >
+        #{visitScore,jdbcType=INTEGER},
+      </if>
+      <if test="liveAddress != null" >
+        #{liveAddress,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjx.entity.Game" >
+    update game
+    <set >
+      <if test="homeTeam != null" >
+        homeTeam = #{homeTeam,jdbcType=INTEGER},
+      </if>
+      <if test="visitTeam != null" >
+        visitTeam = #{visitTeam,jdbcType=INTEGER},
+      </if>
+      <if test="homeScore != null" >
+        homeScore = #{homeScore,jdbcType=INTEGER},
+      </if>
+      <if test="visitScore != null" >
+        visitScore = #{visitScore,jdbcType=INTEGER},
+      </if>
+      <if test="liveAddress != null" >
+        liveAddress = #{liveAddress,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where gameId = #{gameId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hjx.entity.Game" >
+    update admin
+    set homeTeam = #{homeTeam,jdbcType=INTEGER},
+      visitTeam = #{visitTeam,jdbcType=INTEGER},
+      homeScore = #{homeScore,jdbcType=INTEGER},
+      visitScore = #{visitScore,jdbcType=INTEGER},
+      liveAddress = #{liveAddress,jdbcType=VARCHAR}
+    where gameId = #{gameId,jdbcType=INTEGER}
+  </update>
+</mapper>

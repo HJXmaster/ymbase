@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjx.dao.TeamMapper" >
+  <resultMap id="BaseResultMap" type="com.hjx.entity.Team" >
+    <id column="teamId" property="teamId" jdbcType="INTEGER" />
+    <result column="teamName" property="teamName" jdbcType="VARCHAR" />
+    <result column="teamEnName" property="teamEnName" jdbcType="VARCHAR" />
+    <result column="teamBadge" property="teamBadge" jdbcType="VARCHAR" />
+    <result column="teamRegion" property="teamRegion" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    teamId,teamName,teamEnName,teamBadge,teamRegion
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from team
+    where teamId = #{teamId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from team
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from team
+    where teamId = #{teamId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hjx.entity.Team" >
+    insert into team (teamId,teamName,teamEnName,teamBadge,teamRegion)
+    values (#{teamId,jdbcType=INTEGER}, #{teamName,jdbcType=VARCHAR}, #{teamEnName,jdbcType=VARCHAR}, 
+      #{teamBadge,jdbcType=VARCHAR}, #{teamRegion,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjx.entity.Team" >
+    insert into team
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teamId != null" >
+        teamId,
+      </if>
+      <if test="teamName != null" >
+        teamName,
+      </if>
+      <if test="teamEnName != null" >
+        teamEnName,
+      </if>
+      <if test="teamBadge != null" >
+        teamBadge,
+      </if>
+      <if test="teamRegion != null" >
+        visitScore,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teamId != null" >
+        #{teamId,jdbcType=INTEGER},
+      </if>
+      <if test="teamName != null" >
+        #{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamEnName != null" >
+        #{teamEnName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamBadge != null" >
+        #{teamBadge,jdbcType=VARCHAR},
+      </if>
+      <if test="teamRegion != null" >
+        #{teamRegion,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjx.entity.Team" >
+    update team
+    <set>
+      <if test="teamName != null" >
+        teamName=#{teamName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamEnName != null" >
+        teamEnName=#{teamEnName,jdbcType=VARCHAR},
+      </if>
+      <if test="teamBadge != null" >
+        teamBadge=#{teamBadge,jdbcType=VARCHAR},
+      </if>
+      <if test="teamRegion != null" >
+        teamRegion=#{teamRegion,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where teamId = #{teamId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hjx.entity.Team" >
+    update team
+    set teamName=#{teamName,jdbcType=VARCHAR},
+    	teamEnName=#{teamEnName,jdbcType=VARCHAR},
+    	teamBadge=#{teamBadge,jdbcType=VARCHAR},
+    	teamRegion=#{teamRegion,jdbcType=VARCHAR}
+    where teamId = #{teamId,jdbcType=INTEGER}
+  </update>
+</mapper>

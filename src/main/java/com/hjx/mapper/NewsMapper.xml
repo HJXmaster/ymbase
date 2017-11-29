@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjx.dao.NewsMapper" >
+  <resultMap id="BaseResultMap" type="com.hjx.entity.News" >
+    <id column="newsId" property="newsId" jdbcType="INTEGER" />
+    <result column="newsTitle" property="newsTitle" jdbcType="VARCHAR" />
+    <result column="newsPublisher" property="newsPublisher" jdbcType="VARCHAR" />
+    <result column="newsPublishTime" property="newsPublishTime" jdbcType="VARCHAR" />
+    <result column="newsContext" property="newsContext" jdbcType="VARCHAR" />
+    <result column="newsPic" property="newsPic" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    newsId,newsTitle,newsPublisher,newsPublishTime,newsContext,newsPic
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    where newsId = #{newsId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    order by newsPublishTime desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from news
+    where newsId = #{newsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hjx.entity.News" >
+    insert into news (newsId,newsTitle,newsPublisher,newsPublishTime,newsContext,newsPic)
+    values (#{newsId,jdbcType=INTEGER}, #{newsTitle,jdbcType=VARCHAR}, #{newsPublisher,jdbcType=VARCHAR}, 
+      #{newsPublishTime,jdbcType=VARCHAR}, #{newsContext,jdbcType=VARCHAR}, #{newsPic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjx.entity.News" >
+    insert into news
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="newsId != null" >
+        newsId,
+      </if>
+      <if test="newsTitle != null" >
+        newsTitle,
+      </if>
+      <if test="newsPublisher != null" >
+        newsPublisher,
+      </if>
+      <if test="newsPublishTime != null" >
+        newsPublishTime,
+      </if>
+      <if test="newsContext != null" >
+        newsContext,
+      </if>
+      <if test="newsPic != null" >
+        newsPic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="newsId != null" >
+        #{newsId,jdbcType=INTEGER},
+      </if>
+      <if test="newsTitle != null" >
+        #{newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsPublisher != null" >
+        #{newsPublisher,jdbcType=VARCHAR},
+      </if>
+      <if test="newsPublishTime != null" >
+        #{newsPublishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newsContext != null" >
+        #{newsContext,jdbcType=VARCHAR},
+      </if>
+      <if test="newsPic != null" >
+        #{newsPic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjx.entity.News" >
+    update news
+    <set>
+      <if test="newsId != null" >
+        newsId=#{newsId,jdbcType=INTEGER},
+      </if>
+      <if test="newsTitle != null" >
+        newsTitle=#{newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsPublisher != null" >
+        newsPublisher=#{newsPublisher,jdbcType=VARCHAR},
+      </if>
+      <if test="newsPublishTime != null" >
+        newsPublishTime=#{newsPublishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="newsContext != null" >
+        newsContext=#{newsContext,jdbcType=VARCHAR},
+      </if>
+      <if test="newsPic != null" >
+        newsPic=#{newsPic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where newsId = #{newsId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

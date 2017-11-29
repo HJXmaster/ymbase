@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjx.dao.MatchMapper" >
+  <resultMap id="BaseResultMap" type="com.hjx.entity.Match" >
+    <id column="matchId" property="matchId" jdbcType="INTEGER" />
+    <result column="matchDesc" property="matchDesc" jdbcType="VARCHAR" />
+    <result column="leftId" property="leftId" jdbcType="INTEGER" />
+    <result column="leftGoal" property="leftGoal" jdbcType="INTEGER" />
+    <result column="rightId" property="rightId" jdbcType="INTEGER" />    
+    <result column="rightGoal" property="rightGoal" jdbcType="INTEGER" />
+    <result column="startTime" property="startTime" jdbcType="VARCHAR" />
+    <result column="quarter" property="quarter" jdbcType="VARCHAR" />
+    <result column="quarterTime" property="quarterTime" jdbcType="VARCHAR" />
+    <result column="ifEnd" property="ifEnd" jdbcType="VARCHAR" />
+    <association property="leftTeam" column="leftId" select="com.hjx.dao.TeamMapper.selectByPrimaryKey"></association>
+    <association property="rightTeam" column="rightId" select="com.hjx.dao.TeamMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    matchId,matchDesc,leftId,leftGoal,rightId,rightGoal,startTime,quarter,quarterTime,ifEnd
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from `match`
+    where matchId = #{matchId,jdbcType=INTEGER}
+  </select>
+  <!-- 获取对应日期的比赛 -->
+  <select id="getMatchByDate" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `match`
+    where startTime like #{dateTime}"%"
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from `match`
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from `match`
+    where matchId = #{matchId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.hjx.entity.Match" >
+    insert into `match`
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="matchId != null" >
+        matchId,
+      </if>
+      <if test="matchDesc != null" >
+        matchDesc,
+      </if>
+      <if test="leftId != null" >
+        leftId,
+      </if>
+      <if test="leftGoal != null" >
+        leftGoal,
+      </if>
+      <if test="rightId != null" >
+        rightId,
+      </if>
+      <if test="rightGoal != null" >
+        rightGoal,
+      </if>
+      <if test="startTime != null" >
+        startTime,
+      </if>
+      <if test="quarter != null" >
+        quarter,
+      </if>
+      <if test="quarterTime != null" >
+        quarterTime,
+      </if>
+      <if test="ifEnd != null" >
+        ifEnd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="matchId != null" >
+        #{matchId,jdbcType=INTEGER},
+      </if>
+      <if test="matchDesc != null" >
+        #{matchDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="leftId != null" >
+        #{leftId,jdbcType=INTEGER},
+      </if>
+      <if test="leftGoal != null" >
+        #{leftGoal,jdbcType=INTEGER},
+      </if>
+      <if test="rightId != null" >
+        #{rightId,jdbcType=INTEGER},
+      </if>
+      <if test="rightGoal != null" >
+        #{rightGoal,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="quarter != null" >
+        #{quarter,jdbcType=VARCHAR},
+      </if>
+      <if test="quarterTime != null" >
+        #{quarterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ifEnd != null" >
+        #{ifEnd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjx.entity.Match" >
+    update `match`
+    <set >
+      <if test="matchId != null" >
+        matchId = #{matchId,jdbcType=INTEGER},
+      </if>
+      <if test="matchDesc != null" >
+        matchDesc = #{matchDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="leftId != null" >
+        leftId = #{leftId,jdbcType=INTEGER},
+      </if>
+      <if test="leftGoal != null" >
+        leftGoal = #{leftGoal,jdbcType=INTEGER},
+      </if>
+      <if test="rightId != null" >
+        rightId = #{rightId,jdbcType=INTEGER},
+      </if>
+      <if test="rightGoal != null" >
+        rightGoal = #{rightGoal,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        startTime = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="quarter != null" >
+        quarter = #{quarter,jdbcType=VARCHAR},
+      </if>
+      <if test="quarterTime != null" >
+        quarterTime = #{quarterTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ifEnd != null" >
+        ifEnd = #{ifEnd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where matchId = #{matchId,jdbcType=INTEGER}
+  </update>
+</mapper>
