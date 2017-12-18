@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Test;
+
 import com.hjx.crawler.Rule;
 import com.hjx.entity.Match;
 
@@ -42,14 +44,14 @@ public class NBAMatchReptiltTest {
 		}
 		
 	}
-	
+
 	private static void insert(Match match){
-       String sql = "insert into `match` (matchId,matchDesc,leftId,leftGoal,rightId,rightGoal,startTime,quarter,quarterTime) "
-       		+ "values(?,?,?,?,?,?,?,?,?)";
+       String sql = "insert into `match` (matchId,matchDesc,leftId,leftGoal,rightId,rightGoal,startTime,quarter,quarterTime,ifEnd) "
+       		+ "values(?,?,?,?,?,?,?,?,?,?)";
        PreparedStatement pstmt;
        try {
            pstmt = (PreparedStatement) conn.prepareStatement(sql);
-           pstmt.setInt(1, i++);
+           pstmt.setInt(1, match.getMatchId());
            pstmt.setString(2, match.getMatchDesc());
            pstmt.setInt(3, match.getLeftId());
            pstmt.setInt(4, match.getLeftGoal());
@@ -58,6 +60,7 @@ public class NBAMatchReptiltTest {
            pstmt.setString(7, match.getStartTime());
            pstmt.setString(8, match.getQuarter());
            pstmt.setString(9, match.getQuarterTime());
+           pstmt.setString(10, match.getIfEnd());
            int i = pstmt.executeUpdate();
            pstmt.close();
        } catch (SQLException e) {
@@ -66,7 +69,8 @@ public class NBAMatchReptiltTest {
 	}
 	static int i=1;
 
-	public static void getDatasByClass() throws IOException {
+	@Test
+	public void getDatasByClass() throws IOException {
 		String test2="http://matchweb.sports.qq.com/kbs/list?from=NBA_PC&columnId=100000&";
 		Param param=new Param("2017-10-18", "2017-10-24");
 		Rule rule = new Rule(
@@ -106,6 +110,30 @@ public class NBAMatchReptiltTest {
 		
 	}
 
+	
+	public void updateTadayMatch() throws IOException {
+		String test2="http://matchweb.sports.qq.com/kbs/list?from=NBA_PC&columnId=100000&";
+		Param param=new Param("2017-10-18", "2017-10-24");
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+		Calendar calendar=Calendar.getInstance();
+		param.setStartTime(formatter.format(calendar.getTime()));
+		param.setEndTime(formatter.format(calendar.getTime()));
+		System.out.println(param);
+		Rule rule = new Rule(
+				test2+param.toString()
+				,null, null,
+				"", -1, Rule.GET);
+		List<Match> matchs=NBAMatchExtractService.extract(rule);
+		if(matchs!=null&&!matchs.isEmpty()){
+			for(Match match:matchs){
+				
+			}
+			
+		}
+		
+	}
 
 //	public void getDatasByCssQuery() {
 //		Rule rule = new Rule("http://www.11315.com/search",

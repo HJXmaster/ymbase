@@ -8,9 +8,10 @@
     <result column="newsPublishTime" property="newsPublishTime" jdbcType="VARCHAR" />
     <result column="newsContext" property="newsContext" jdbcType="VARCHAR" />
     <result column="newsPic" property="newsPic" jdbcType="VARCHAR" />
+    <result column="newsReadNum" property="newsReadNum" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    newsId,newsTitle,newsPublisher,newsPublishTime,newsContext,newsPic
+    newsId,newsTitle,newsPublisher,newsPublishTime,newsContext,newsPic,newsReadNum
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -24,14 +25,22 @@
     from news
     order by newsPublishTime desc
   </select>
+  <!-- 分页查找 -->
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from news
+    order by newsPublishTime desc
+    limit 0,20
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from news
     where newsId = #{newsId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.hjx.entity.News" >
-    insert into news (newsId,newsTitle,newsPublisher,newsPublishTime,newsContext,newsPic)
+    insert into news (newsId,newsTitle,newsPublisher,newsPublishTime,newsContext,newsPic,newsReadNum)
     values (#{newsId,jdbcType=INTEGER}, #{newsTitle,jdbcType=VARCHAR}, #{newsPublisher,jdbcType=VARCHAR}, 
-      #{newsPublishTime,jdbcType=VARCHAR}, #{newsContext,jdbcType=VARCHAR}, #{newsPic,jdbcType=VARCHAR})
+      #{newsPublishTime,jdbcType=VARCHAR}, #{newsContext,jdbcType=VARCHAR}, #{newsPic,jdbcType=VARCHAR},#{newsReadNum,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.hjx.entity.News" >
     insert into news
@@ -54,6 +63,9 @@
       <if test="newsPic != null" >
         newsPic,
       </if>
+      <if test="newsReadNum != null" >
+        newsReadNum,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="newsId != null" >
@@ -74,6 +86,9 @@
       <if test="newsPic != null" >
         #{newsPic,jdbcType=VARCHAR},
       </if>
+      <if test="newsReadNum != null" >
+        #{newsReadNum,jdbcType=INTEGER},
+      </if>      
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.hjx.entity.News" >
@@ -96,6 +111,9 @@
       </if>
       <if test="newsPic != null" >
         newsPic=#{newsPic,jdbcType=VARCHAR},
+      </if>
+      <if test="newsReadNum != null" >
+        newsReadNum=#{newsReadNum,jdbcType=INTEGER},
       </if>
     </set>
     where newsId = #{newsId,jdbcType=INTEGER}

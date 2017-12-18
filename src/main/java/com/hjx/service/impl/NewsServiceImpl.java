@@ -46,5 +46,18 @@ public class NewsServiceImpl implements NewsService{
 		// TODO Auto-generated method stub
 		return newsMapper.selectAll();
 	}
-	
+
+	@Override
+	public boolean incNewsReadNum(int newsId) {
+		// TODO Auto-generated method stub
+		News news=newsMapper.selectByPrimaryKey(newsId);
+		if(news==null)return false;
+		news.setNewsReadNum(news.getNewsReadNum()+1);
+		return newsMapper.updateByPrimaryKeySelective(news)==0?true:false;
+	}
+	@Override
+	public List<News> select() {
+		// TODO Auto-generated method stub
+		return newsMapper.select();
+	}
 }

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjx.dao.NewsReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.hjx.entity.NewsReply" >
+    <id column="nr_id" property="nrId" jdbcType="INTEGER" />
+    <result column="newsId" property="newsId" jdbcType="INTEGER" />
+    <result column="nr_uid" property="nrUid" jdbcType="VARCHAR" />
+    <result column="nr_reply_id" property="nrReplyId" jdbcType="INTEGER" />
+    <result column="nr_time" property="nrTime" jdbcType="VARCHAR" />
+    <result column="nr_context" property="nrContext" jdbcType="VARCHAR" />
+    <result column="nr_support" property="nrSupport" jdbcType="INTEGER" />
+    <association property="username" column="nr_uid" select="com.hjx.dao.UserMapper.getUsername" jdbcType="VARCHAR"></association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    nr_id,newsId,nr_uid,nr_reply_id,nr_time,nr_context,nr_support
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from news_reply
+    where nr_id = #{nrId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 查看指定新闻的所有评论,按时间顺序 -->
+  <select id="selectNewsReplyByNewsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from news_reply
+    where newsId=#{newsId,jdbcType=INTEGER}
+    order by nr_time desc
+    limit 0,20
+  </select>
+  
+  <!-- 查找指定评论的回复 -->
+  <select id="selectByReplyId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select 
+    <include refid="Base_Column_List" />
+    from news_reply
+    where nr_reply_id=#{nrReplyId,jdbcType=INTEGER}
+    order by nr_time desc
+    limit 0,20
+  </select>
+  
+  <!-- 删除评论 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from news_reply
+    where nr_id = #{nrId,jdbcType=INTEGER}
+  </delete>
+
+<!-- 插入评论 -->
+  <insert id="insertSelective" parameterType="com.hjx.entity.NewsReply" >
+    insert into news_reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nrId != null" >
+        nr_id,
+      </if>
+      <if test="newsId != null" >
+        newsId,
+      </if>
+      <if test="nrUid != null" >
+        nr_uid,
+      </if>
+      <if test="nrReplyId != null" >
+        nr_reply_id,
+      </if>
+      <if test="nrTime != null" >
+        nr_time,
+      </if>
+      <if test="nrContext != null" >
+        nr_context,
+      </if>
+      <if test="nrSupport != null" >
+        nr_support,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nrId != null" >
+        #{nrId,jdbcType=INTEGER},
+      </if>
+      <if test="newsId != null" >
+        #{newsId,jdbcType=INTEGER},
+      </if>
+      <if test="nrUid != null" >
+        #{nrUid,jdbcType=VARCHAR},
+      </if>
+      <if test="nrReplyId != null" >
+        #{nrReplyId,jdbcType=INTEGER},
+      </if>
+      <if test="nrTime != null" >
+        #{nrTime,jdbcType=VARCHAR},
+      </if>
+      <if test="nrContext != null" >
+        #{nrContext,jdbcType=VARCHAR},
+      </if>
+      <if test="nrSupport != null" >
+        #{nrSupport,jdbcType=INTEGER},
+      </if>    
+    </trim>
+  </insert>
+
+</mapper>

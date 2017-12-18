@@ -27,4 +27,6 @@ public interface NewsService {
     
 
     List<News> selectAll();
+    List<News> select();
+    boolean incNewsReadNum(int newsId);
 }

@@ -7,6 +7,9 @@ public class Team {
 	private String teamEnName;
 	private String teamBadge;
 	private String teamRegion;
+	private int win;
+	private int fail;
+	
 	public int getTeamId() {
 		return teamId;
 	}
@@ -36,5 +39,17 @@ public class Team {
 	}
 	public void setTeamRegion(String teamRegion) {
 		this.teamRegion = teamRegion;
+	}
+	public int getWin() {
+		return win;
+	}
+	public void setWin(int win) {
+		this.win = win;
+	}
+	public int getFail() {
+		return fail;
+	}
+	public void setFail(int fail) {
+		this.fail = fail;
 	}
 }

@@ -5,6 +5,7 @@ var nTime=-1;
 var getBarrageTime=null;
 var liveNum=0;//直播时用来记录已发送过的弹幕的最新编号
 var cksarr=parseInt(ckstyle()['cpt_barrage'].split('|')[4])==1?isOpen=true:isOpen=false;
+console.log('cksarr的值是：'+ cksarr+'，对吧？');
 function loadedHandler(){
 	if(!CKobject.getObjectById('ckplayer_a1').getType()){//只有在flash播放器情况下使用该监听
 		console.log('只有在flash播放器情况下使用该监听');

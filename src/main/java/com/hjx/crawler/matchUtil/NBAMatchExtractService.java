@@ -168,6 +168,10 @@ public class NBAMatchExtractService
 	        	match.setStartTime(value.get("startTime").getAsString());
 	        	match.setQuarter(value.get("quarter").getAsString());
 	        	match.setQuarterTime(value.get("quarterTime").getAsString());
+	        	match.setMatchId(Integer.valueOf(value.get("mid").getAsString().split(":")[1]));
+	        	if(value.get("liveType").getAsString().toString().equals("4")){
+	        		match.setIfEnd("1");
+	        	}
 	        	System.out.println(match);
 	        	matchs.add(match);
         	}

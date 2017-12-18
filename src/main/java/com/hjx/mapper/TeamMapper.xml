@@ -7,6 +7,8 @@
     <result column="teamEnName" property="teamEnName" jdbcType="VARCHAR" />
     <result column="teamBadge" property="teamBadge" jdbcType="VARCHAR" />
     <result column="teamRegion" property="teamRegion" jdbcType="VARCHAR" />
+    <association property="win" column="teamId" select="com.hjx.dao.MatchMapper.getWin" ></association>
+    <association property="fail" column="teamId" select="com.hjx.dao.MatchMapper.getFail" ></association>
   </resultMap>
   <sql id="Base_Column_List" >
     teamId,teamName,teamEnName,teamBadge,teamRegion

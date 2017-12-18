@@ -18,6 +18,7 @@ public class NewsController {
 	@ResponseBody
 	public Object getNewsById(Integer newsId){
 		System.out.println("新闻编号："+newsId);
+		newsService.incNewsReadNum(newsId);
 		return newsService.getByNewsId(newsId);
 	}
 	
@@ -25,6 +26,6 @@ public class NewsController {
 	@ResponseBody
 	public Object getNews(){
 		
-		return newsService.selectAll();
+		return newsService.select();
 	}
 }

@@ -8,7 +8,7 @@ public class News {
 	private String newsPublishTime;
 	private String newsContext;
 	private String newsPic;
-	
+	private Integer newsReadNum;
 	
 	@Override
 	public String toString() {
@@ -52,6 +52,13 @@ public class News {
 	}
 	public void setNewsPic(String newsPic) {
 		this.newsPic = newsPic;
+	}
+	public int getNewsReadNum() {
+		if(newsReadNum==null)return 0;
+		else return newsReadNum;
+	}
+	public void setNewsReadNum(Integer newsReadNum) {
+		this.newsReadNum = newsReadNum;
 	}
 	
 }

@@ -24,6 +24,19 @@
     from `match`
     where matchId = #{matchId,jdbcType=INTEGER}
   </select>
+  
+  <select id="getWin" resultType="INTEGER">
+    select COUNT(*)
+    from `match`
+    where (ifEnd = 1 AND leftId= #{teamId,jdbcType=INTEGER} AND leftGoal &gt; rightGoal) OR (ifEnd=1 AND rightId=#{teamId,jdbcType=INTEGER} AND leftGoal &lt; rightGoal)
+  </select>
+  
+  <select id="getFail" resultType="INTEGER">
+    select COUNT(*)
+    from `match`
+    where (ifEnd = 1 AND leftId= #{teamId,jdbcType=INTEGER} AND leftGoal &lt; rightGoal) OR (ifEnd=1 AND rightId=#{teamId,jdbcType=INTEGER} AND leftGoal &gt; rightGoal)
+  </select>
+  
   <!-- 获取对应日期的比赛 -->
   <select id="getMatchByDate" resultMap="BaseResultMap">
     select 

@@ -44,7 +44,7 @@ public class MatchServiceImpl implements MatchService{
 	@Override
 	public boolean update(Match match) {
 		// TODO Auto-generated method stub
-		return false;
+		return matchMapper.updateByPrimaryKeySelective(match)==0?true:false;
 	}
 
 	@Override

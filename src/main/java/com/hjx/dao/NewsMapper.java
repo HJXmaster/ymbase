@@ -21,4 +21,5 @@ public interface NewsMapper {
 //    int updateByPrimaryKey(Team record);
     
     List<News> selectAll();
+    List<News> select();
 }
