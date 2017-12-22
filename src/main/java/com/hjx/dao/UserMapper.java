@@ -10,8 +10,6 @@ public interface UserMapper {
 
     int deleteByPrimaryKey(String uid);
 
-    int insert(User record);
-
     int insertSelective(User record);
 
     User selectByPrimaryKey(String uid);
@@ -19,4 +17,6 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
     
     List<User> selectAll();
+    
+    User selectByidAndPassword(User user);
 }

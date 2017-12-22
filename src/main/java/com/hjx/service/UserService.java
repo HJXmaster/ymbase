@@ -8,4 +8,5 @@ import com.hjx.entity.User;
 public interface UserService {
 
 	User getUserInfo(String uid);
+	User selectByIdAndPassword(String uid,String upassword);
 }

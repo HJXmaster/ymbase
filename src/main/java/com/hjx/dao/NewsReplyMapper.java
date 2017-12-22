@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import com.hjx.entity.News;
 import com.hjx.entity.NewsReply;
+import com.hjx.tools.Page;
 @Repository
 public interface NewsReplyMapper {
 
@@ -15,6 +16,8 @@ public interface NewsReplyMapper {
 
     NewsReply selectByPrimaryKey(Integer nrId);
     
-    List<NewsReply> selectNewsReplyByNewsId(Integer newsId);
-    List<NewsReply> selectByReplyId(Integer nrReplyId);
+    List<NewsReply> selectNewsReplyByNewsId(Page page);
+    List<NewsReply> selectByReplyId(Page page);
+    List<NewsReply> selectHotNewsReplyByNewsId(Page page);
+    List<NewsReply> selectByUid(String uid);
 }

@@ -10,6 +10,7 @@
     <result column="nr_context" property="nrContext" jdbcType="VARCHAR" />
     <result column="nr_support" property="nrSupport" jdbcType="INTEGER" />
     <association property="username" column="nr_uid" select="com.hjx.dao.UserMapper.getUsername" jdbcType="VARCHAR"></association>
+    <association property="title" column="newsId" select="com.hjx.dao.NewsMapper.getTitleByNewsId" jdbcType="VARCHAR"></association>
   </resultMap>
   <sql id="Base_Column_List" >
     nr_id,newsId,nr_uid,nr_reply_id,nr_time,nr_context,nr_support
@@ -22,24 +23,44 @@
     where nr_id = #{nrId,jdbcType=INTEGER}
   </select>
   
-  <!-- 查看指定新闻的所有评论,按时间顺序 -->
-  <select id="selectNewsReplyByNewsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <!-- 查找用户的所有评论 -->
+  <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from news_reply
-    where newsId=#{newsId,jdbcType=INTEGER}
+    where nr_uid = #{uid,jdbcType=VARCHAR}
     order by nr_time desc
-    limit 0,20
+  </select>
+  
+  <!-- 查看指定新闻的所有评论,按时间顺序 -->
+  <select id="selectNewsReplyByNewsId" resultMap="BaseResultMap" parameterType="com.hjx.tools.Page">
+    select 
+    <include refid="Base_Column_List" />
+    from news_reply
+    where newsId=#{id,jdbcType=INTEGER}
+    order by nr_time desc
+    limit #{start,jdbcType=INTEGER},#{num,jdbcType=INTEGER}
+  </select>
+  
+  
+  <!-- 查看指定新闻的所有评论,按点赞数倒叙顺序 -->
+  <select id="selectHotNewsReplyByNewsId" resultMap="BaseResultMap" parameterType="com.hjx.tools.Page">
+    select 
+    <include refid="Base_Column_List" />
+    from news_reply
+    where newsId=#{id,jdbcType=INTEGER}
+    order by nr_support desc
+    limit #{start,jdbcType=INTEGER},#{num,jdbcType=INTEGER}
   </select>
   
   <!-- 查找指定评论的回复 -->
-  <select id="selectByReplyId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  <select id="selectByReplyId" resultMap="BaseResultMap" parameterType="com.hjx.tools.Page">
     select 
     <include refid="Base_Column_List" />
     from news_reply
-    where nr_reply_id=#{nrReplyId,jdbcType=INTEGER}
-    order by nr_time desc
-    limit 0,20
+    where nr_reply_id=#{id,jdbcType=INTEGER}
+    order by nr_time asc
+    limit #{start,jdbcType=INTEGER},#{num,jdbcType=INTEGER}
   </select>
   
   <!-- 删除评论 -->

@@ -39,8 +39,7 @@ public class TeamServiceImpl implements TeamService{
 
 	@Override
 	public List<Team> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return teamMapper.selectAll();
 	}
 
 }

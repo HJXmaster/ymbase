@@ -18,4 +18,14 @@ public class UserServiceImpl implements UserService{
 		return userMapper.selectByPrimaryKey(uid);
 	}
 
+	@Override
+	public User selectByIdAndPassword(String uid, String upassword) {
+		User user=new User();
+		user.setUid(uid);
+		user.setUphone(uid);
+		user.setUemail(uid);
+		user.setUpassword(upassword);
+		return userMapper.selectByidAndPassword(user);
+	}
+
 }

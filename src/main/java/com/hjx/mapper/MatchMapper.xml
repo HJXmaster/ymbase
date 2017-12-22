@@ -43,6 +43,7 @@
     <include refid="Base_Column_List" />
     from `match`
     where startTime like #{dateTime}"%"
+    order by ifEnd asc,startTime asc
   </select>
   
   <select id="selectAll" resultMap="BaseResultMap">

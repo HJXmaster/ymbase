@@ -22,7 +22,7 @@ public class TaskJob {
 	@Autowired
 	MatchService matchService;
 	
-	@Scheduled(cron="0 0/1 7,8,9,10,11,12,13 * * ?")
+	@Scheduled(cron="0 0/1 7,8,9,10,11,12,13,14 * * ?")
     public void job1() {  
         System.out.println("任务进行中。。。");
 		String test2="http://matchweb.sports.qq.com/kbs/list?from=NBA_PC&columnId=100000&";
