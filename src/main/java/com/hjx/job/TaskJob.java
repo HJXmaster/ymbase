@@ -22,11 +22,11 @@ public class TaskJob {
 	@Autowired
 	MatchService matchService;
 	
-	@Scheduled(cron="0 0/1 7,8,9,10,11,12,13,14 * * ?")
+	@Scheduled(cron="0 0/1 7,8,9,10,11,12,13,16 * * *")
     public void job1() {  
         System.out.println("任务进行中。。。");
 		String test2="http://matchweb.sports.qq.com/kbs/list?from=NBA_PC&columnId=100000&";
-		Param param=new Param("2017-10-18", "2017-10-24");
+		Param param=new Param("2018-01-08", "2018-01-14");
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 

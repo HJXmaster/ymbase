@@ -161,6 +161,7 @@ public class NBAMatchExtractService
 	        	System.out.println(value);
 	        	Match match=new Match();
 	        	match.setMatchDesc(value.get("matchDesc").getAsString());
+	        	if(value.get("leftId").getAsString().equals("")||value.get("leftId")==null){continue;}
 	        	match.setLeftId(value.get("leftId").getAsInt());
 	        	match.setLeftGoal(value.get("leftGoal").getAsInt());
 	        	match.setRightId(value.get("rightId").getAsInt());

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjx.dao.TopicMapper" >
+  <resultMap id="BaseResultMap" type="com.hjx.entity.Topic" >
+    <id column="topicId" property="topicId" jdbcType="INTEGER" />
+    <result column="topicTitle" property="topicTitle" jdbcType="VARCHAR" />
+    <result column="topicPublisher" property="topicPublisher" jdbcType="VARCHAR" />
+    <result column="topicPublishTime" property="topicPublishTime" jdbcType="VARCHAR" />
+    <result column="topicContext" property="topicContext" jdbcType="VARCHAR" />
+    <result column="topicReplyNum" property="topicReplyNum" jdbcType="INTEGER" />
+    <result column="topicReadNum" property="topicReadNum" jdbcType="INTEGER" />
+    <result column="topicReplyTime" property="topicReplyTime" jdbcType="VARCHAR" />
+    <association property="username" column="topicPublisher" select="com.hjx.dao.UserMapper.getUsername" jdbcType="VARCHAR"></association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    topicId,topicTitle,topicPublisher,topicPublishTime,topicContext,topicReplyNum,topicReadNum,topicReplyTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from topic
+    where topicId = #{topicId,jdbcType=INTEGER}
+  </select>
+  <select id="getTitleByTopicId" resultType="java.lang.String" parameterType="java.lang.Integer">
+    select topicTitle
+    from topic
+    where topicId = #{topicId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from topic
+    order by topicPublishTime desc
+  </select>
+  <!-- 分页查找 -->
+  <select id="select" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from topic
+    order by topicPublishTime desc
+    limit 0,20
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from topic
+    where topicId = #{topicId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hjx.entity.Topic" >
+    insert into topic (topicId,topicTitle,topicPublisher,topicPublishTime,topicContext,topicReplyNum,topicReadNum,topicReplyTime)
+    values (#{topicId,jdbcType=INTEGER}, #{topicTitle,jdbcType=VARCHAR}, #{topicPublisher,jdbcType=VARCHAR}, 
+      #{topicPublishTime,jdbcType=VARCHAR}, #{topicContext,jdbcType=VARCHAR}, #{topicReplyNum,jdbcType=INTEGER},#{topicReadNum,jdbcType=INTEGER},#{topicReplyTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.hjx.entity.Topic" >
+    insert into topic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="topicId != null" >
+        topicId,
+      </if>
+      <if test="topicTitle != null" >
+        topicTitle,
+      </if>
+      <if test="topicPublisher != null" >
+        topicPublisher,
+      </if>
+      <if test="topicPublishTime != null" >
+        topicPublishTime,
+      </if>
+      <if test="topicContext != null" >
+        topicContext,
+      </if>
+      <if test="topicReplyNum != null" >
+        topicReplyNum,
+      </if>
+      <if test="topicReadNum != null" >
+        topicReadNum,
+      </if>
+      <if test="topicReplyTime != null" >
+        topicReplyTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="topicId != null" >
+        #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="topicTitle != null" >
+        #{topicTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="topicPublisher != null" >
+        #{topicPublisher,jdbcType=VARCHAR},
+      </if>
+      <if test="topicPublishTime != null" >
+        #{topicPublishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="topicContext != null" >
+        #{topicContext,jdbcType=VARCHAR},
+      </if>
+      <if test="topicReplyNum != null" >
+        #{topicReplyNum,jdbcType=INTEGER},
+      </if>
+      <if test="topicReadNum != null" >
+        #{topicReadNum,jdbcType=INTEGER},
+      </if>
+      <if test="topicReplyTime != null" >
+        #{topicReplyTime,jdbcType=VARCHAR},
+      </if>      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hjx.entity.Topic" >
+    update topic
+    <set>
+      <if test="topicId != null" >
+        topicId=#{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="topicTitle != null" >
+        topicTitle=#{topicTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="topicPublisher != null" >
+        topicPublisher=#{topicPublisher,jdbcType=VARCHAR},
+      </if>
+      <if test="topicPublishTime != null" >
+        topicPublishTime=#{topicPublishTime,jdbcType=VARCHAR},
+      </if>
+      <if test="topicContext != null" >
+        topicContext=#{topicContext,jdbcType=VARCHAR},
+      </if>
+      <if test="topicReplyNum != null" >
+        topicReplyNum=#{topicReplyNum,jdbcType=INTEGER},
+      </if>
+      <if test="topicReadNum != null" >
+        topicReadNum=#{topicReadNum,jdbcType=INTEGER},
+      </if>
+      <if test="topicReplyTime != null" >
+        topicReplyTime=#{topicReplyTime,jdbcType=VARCHAR},
+      </if>  
+    </set>
+    where topicId = #{topicId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

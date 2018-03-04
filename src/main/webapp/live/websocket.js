@@ -23,7 +23,11 @@ websocket.onopen = function(event){
  
 //接收到消息的回调方法
 websocket.onmessage = function(){
-    setMessageInnerHTML(event.data);
+	var strs=event.data.split(":",2)
+    setMessageInnerHTML(strs[1]);
+	var text1="<tr><td style='color:rgb(64, 158, 255);'>"+strs[0]+"</td><td>"+strs[1]+"</td></tr>"
+	console.log(text1)
+$("#DMContext").append(text1)
 }
  
 //连接关闭的回调方法
@@ -42,7 +46,9 @@ window.onbeforeunload = function(){
 function setMessageInnerHTML(innerHTML){
 //$(".d_show").append("<div id='"+index+"'>"+ innerHTML + "</div>");
 //launch();
+
 	CKobject.getObjectById('ckplayer_a1').loadBarrage(innerHTML);
+	
 }
 
 

@@ -15,7 +15,9 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<mapper resource="com/hjx/mapper/TeamMapper.xml" />
 		<mapper resource="com/hjx/mapper/MatchMapper.xml" />
 		<mapper resource="com/hjx/mapper/NewsMapper.xml" />
+		<mapper resource="com/hjx/mapper/TopicMapper.xml" />
 		<mapper resource="com/hjx/mapper/UserMapper.xml" />
 		<mapper resource="com/hjx/mapper/NewsReplyMapper.xml" />
+		<mapper resource="com/hjx/mapper/TopicReplyMapper.xml" />
 	</mappers>
 </configuration>

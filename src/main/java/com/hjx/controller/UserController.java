@@ -1,11 +1,16 @@
 package com.hjx.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -64,5 +69,18 @@ public class UserController {
 			map.put("msg", "已下线!");
 			return map; 
 		}
+	}	
+	@RequestMapping("/getUser.do")
+	@ResponseBody
+	public String getUser(HttpSession session,HttpServletResponse response,HttpServletRequest request) throws ServletException, IOException{
+		session.getServletContext().getRequestDispatcher("/getIndex.do").forward(request,response);
+		
+		return null;
+	}
+	
+	@RequestMapping("/getIndex.do")
+	public String getIndex(){
+		System.out.println("跳转页面");
+		return "index";
 	}
 }

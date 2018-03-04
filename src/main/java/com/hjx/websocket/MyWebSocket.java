@@ -10,6 +10,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 //每个客户端连接成功的时候在后台都会创建一个相应的MyWebsocket类
 @ServerEndpoint("/websocket")
 public class MyWebSocket {
@@ -50,6 +52,7 @@ public class MyWebSocket {
 	}
 
 	private void send(String message) throws IOException {
+		
 		this.session.getAsyncRemote().sendText(message);
 		// this.session.getBasicRemote().sendText(message);
 

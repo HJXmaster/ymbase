@@ -82,8 +82,8 @@ public class NBAMatchReptiltTest {
 		Date startTime = null;
 		Date endTime =null;
 		try {
-			startTime = formatter.parse("2017-10-18");
-			endTime = formatter.parse("2017-10-24");
+			startTime = formatter.parse("2018-01-16");
+			endTime = formatter.parse("2018-01-22");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

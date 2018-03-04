@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hjx.dao.TopicReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.hjx.entity.TopicReply" >
+    <id column="tr_id" property="trId" jdbcType="INTEGER" />
+    <result column="topicId" property="topicId" jdbcType="INTEGER" />
+    <result column="tr_uid" property="trUid" jdbcType="VARCHAR" />
+    <result column="tr_reply_id" property="trReplyId" jdbcType="INTEGER" />
+    <result column="tr_time" property="trTime" jdbcType="VARCHAR" />
+    <result column="tr_context" property="trContext" jdbcType="VARCHAR" />
+    <result column="tr_support" property="trSupport" jdbcType="INTEGER" />
+    <association property="username" column="tr_uid" select="com.hjx.dao.UserMapper.getUsername" jdbcType="VARCHAR"></association>
+    <association property="title" column="topicId" select="com.hjx.dao.TopicMapper.getTitleByTopicId" jdbcType="VARCHAR"></association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tr_id,topicId,tr_uid,tr_reply_id,tr_time,tr_context,tr_support
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from topic_reply
+    where tr_id = #{trId,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 查找用户的所有评论 -->
+  <select id="selectByUid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from topic_reply
+    where tr_uid = #{uid,jdbcType=VARCHAR}
+    order by tr_time desc
+  </select>
+  
+  <!-- 查看指定新闻的所有评论,按时间顺序 -->
+  <select id="selectTopicReplyByTopicId" resultMap="BaseResultMap" parameterType="com.hjx.tools.Page">
+    select 
+    <include refid="Base_Column_List" />
+    from topic_reply
+    where topicId=#{id,jdbcType=INTEGER}
+    order by tr_time desc
+    limit #{start,jdbcType=INTEGER},#{num,jdbcType=INTEGER}
+  </select>
+  
+  
+  <!-- 查看指定新闻的所有评论,按点赞数倒叙顺序 -->
+  <select id="selectHotTopicReplyByTopicId" resultMap="BaseResultMap" parameterType="com.hjx.tools.Page">
+    select 
+    <include refid="Base_Column_List" />
+    from topic_reply
+    where topicId=#{id,jdbcType=INTEGER}
+    order by tr_support desc
+    limit #{start,jdbcType=INTEGER},#{num,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 查找指定评论的回复 -->
+  <select id="selectByReplyId" resultMap="BaseResultMap" parameterType="com.hjx.tools.Page">
+    select 
+    <include refid="Base_Column_List" />
+    from topic_reply
+    where tr_reply_id=#{id,jdbcType=INTEGER}
+    order by tr_time asc
+    limit #{start,jdbcType=INTEGER},#{num,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 删除评论 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from topic_reply
+    where tr_id = #{trId,jdbcType=INTEGER}
+  </delete>
+
+<!-- 插入评论 -->
+  <insert id="insertSelective" parameterType="com.hjx.entity.TopicReply" >
+    insert into topic_reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="trId != null" >
+        tr_id,
+      </if>
+      <if test="topicId != null" >
+        topicId,
+      </if>
+      <if test="trUid != null" >
+        tr_uid,
+      </if>
+      <if test="trReplyId != null" >
+        tr_reply_id,
+      </if>
+      <if test="trTime != null" >
+        tr_time,
+      </if>
+      <if test="trContext != null" >
+        tr_context,
+      </if>
+      <if test="trSupport != null" >
+        tr_support,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="trId != null" >
+        #{trId,jdbcType=INTEGER},
+      </if>
+      <if test="topicId != null" >
+        #{topicId,jdbcType=INTEGER},
+      </if>
+      <if test="trUid != null" >
+        #{trUid,jdbcType=VARCHAR},
+      </if>
+      <if test="trReplyId != null" >
+        #{trReplyId,jdbcType=INTEGER},
+      </if>
+      <if test="trTime != null" >
+        #{trTime,jdbcType=VARCHAR},
+      </if>
+      <if test="trContext != null" >
+        #{trContext,jdbcType=VARCHAR},
+      </if>
+      <if test="trSupport != null" >
+        #{trSupport,jdbcType=INTEGER},
+      </if>    
+    </trim>
+  </insert>
+
+</mapper>
